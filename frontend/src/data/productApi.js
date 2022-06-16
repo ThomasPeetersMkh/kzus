@@ -13,6 +13,9 @@ const productApi = createApi({
     getProductById: builder.query({
       query: (id) => ({ url: `/${id}` }),
     }),
+    getProductById: builder.mutation({
+      query: ({}) => ({ url: `/${id}` }),
+    }),
   }),
 });
 
