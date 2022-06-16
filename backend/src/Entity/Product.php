@@ -7,9 +7,13 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *   normalizationContext={"groups"={"product:read"}},
+ *   denormalizationContext={"groups"={"product:write"}},
+ * )
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  */
 class Product
@@ -18,48 +22,56 @@ class Product
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"product:read","product:write"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"product:read","product:write","school:read","category:read"})
      */
     private $name;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"product:read","product:write","school:read","category:read"})
      */
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=50)
+     * @Groups({"product:read","product:write","category:read"})
      */
     private $status;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"product:read","product:write","category:read"})
      */
     private $img_path;
 
     /**
      * @ORM\ManyToOne(targetEntity=School::class, inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"product:read","product:write","category:read"})
      */
-    private $school_id;
+    private $school;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Person::class, inversedBy="products")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="products")
+     * @Groups({"product:read","product:write","category:read"})
      */
-    private $person_id;
+    private $user;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="products")
+     * @Groups({"product:read","product:write"})
      */
-    private $cat_id;
+    private $category;
 
     public function __construct()
     {
-        $this->cat_id = new ArrayCollection();
+        $this->category = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,7 +96,7 @@ class Product
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
@@ -115,26 +127,26 @@ class Product
         return $this;
     }
 
-    public function getSchoolId(): ?School
+    public function getSchool(): ?School
     {
-        return $this->school_id;
+        return $this->school;
     }
 
-    public function setSchoolId(?School $school_id): self
+    public function setSchool(?School $school): self
     {
-        $this->school_id = $school_id;
+        $this->school = $school;
 
         return $this;
     }
 
-    public function getPersonId(): ?Person
+    public function getUser(): ?User
     {
-        return $this->person_id;
+        return $this->user;
     }
 
-    public function setPersonId(?Person $person_id): self
+    public function setUser(?User $user): self
     {
-        $this->person_id = $person_id;
+        $this->user = $user;
 
         return $this;
     }
@@ -142,23 +154,23 @@ class Product
     /**
      * @return Collection<int, Category>
      */
-    public function getCatId(): Collection
+    public function getCategory(): Collection
     {
-        return $this->cat_id;
+        return $this->category;
     }
 
-    public function addCatId(Category $catId): self
+    public function addCategory(Category $category): self
     {
-        if (!$this->cat_id->contains($catId)) {
-            $this->cat_id[] = $catId;
+        if (!$this->category->contains($category)) {
+            $this->category[] = $category;
         }
 
         return $this;
     }
 
-    public function removeCatId(Category $catId): self
+    public function removeCategory(Category $category): self
     {
-        $this->cat_id->removeElement($catId);
+        $this->category->removeElement($category);
 
         return $this;
     }

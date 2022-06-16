@@ -3,17 +3,6 @@ import Modal from "react-modal";
 const ArticleModal = ({ modalOpen, setModalOpen, details }) => {
   Modal.setAppElement("#root");
   const { name, school, img_url, description } = details;
-  let subtitle;
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-    },
-  };
 
   function afterOpenModal() {}
 

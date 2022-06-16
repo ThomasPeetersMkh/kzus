@@ -7,9 +7,14 @@ use App\Repository\SchoolRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *   normalizationContext={"groups"={"school:read"}},
+ *   denormalizationContext={"groups"={"school:write"}},
+ * )
  * @ORM\Entity(repositoryClass=SchoolRepository::class)
  */
 class School
@@ -18,32 +23,38 @@ class School
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"school:read","school:write"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"school:read","school:write","product:read","category:read"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"school:read","school:write"})
      */
-    private $adress;
+    private $address;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Person::class, inversedBy="school_id")
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="schools")
+     * @Groups({"school:read","school:write"})
      */
-    private $person_id;
+    private $relation;
 
     /**
-     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="school_id")
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="school")
+     * @Groups({"school:read","school:write"})
+     * @MaxDepth(1)
      */
     private $products;
 
     public function __construct()
     {
-        $this->person_id = new ArrayCollection();
+        $this->relation = new ArrayCollection();
         $this->products = new ArrayCollection();
     }
 
@@ -64,38 +75,38 @@ class School
         return $this;
     }
 
-    public function getAdress(): ?string
+    public function getAddress(): ?string
     {
-        return $this->adress;
+        return $this->address;
     }
 
-    public function setAdress(string $adress): self
+    public function setAddress(string $address): self
     {
-        $this->adress = $adress;
+        $this->address = $address;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Person>
+     * @return Collection<int, User>
      */
-    public function getPersonId(): Collection
+    public function getRelation(): Collection
     {
-        return $this->person_id;
+        return $this->relation;
     }
 
-    public function addPersonId(Person $personId): self
+    public function addRelation(User $relation): self
     {
-        if (!$this->person_id->contains($personId)) {
-            $this->person_id[] = $personId;
+        if (!$this->relation->contains($relation)) {
+            $this->relation[] = $relation;
         }
 
         return $this;
     }
 
-    public function removePersonId(Person $personId): self
+    public function removeRelation(User $relation): self
     {
-        $this->person_id->removeElement($personId);
+        $this->relation->removeElement($relation);
 
         return $this;
     }
@@ -112,7 +123,7 @@ class School
     {
         if (!$this->products->contains($product)) {
             $this->products[] = $product;
-            $product->setSchoolId($this);
+            $product->setSchool($this);
         }
 
         return $this;
@@ -122,8 +133,8 @@ class School
     {
         if ($this->products->removeElement($product)) {
             // set the owning side to null (unless already changed)
-            if ($product->getSchoolId() === $this) {
-                $product->setSchoolId(null);
+            if ($product->getSchool() === $this) {
+                $product->setSchool(null);
             }
         }
 

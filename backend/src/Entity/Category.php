@@ -7,9 +7,13 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *   normalizationContext={"groups"={"category:read"}},
+ *   denormalizationContext={"groups"={"category:write"}},
+ * )
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
  */
 class Category
@@ -23,11 +27,13 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"category:read","category:write","product:read"})
      */
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="cat_id")
+     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="category")
+     * @Groups({"category:read","category:write"})
      */
     private $products;
 
@@ -65,7 +71,7 @@ class Category
     {
         if (!$this->products->contains($product)) {
             $this->products[] = $product;
-            $product->addCatId($this);
+            $product->addCategory($this);
         }
 
         return $this;
@@ -74,7 +80,7 @@ class Category
     public function removeProduct(Product $product): self
     {
         if ($this->products->removeElement($product)) {
-            $product->removeCatId($this);
+            $product->removeCategory($this);
         }
 
         return $this;
