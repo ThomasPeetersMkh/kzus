@@ -32,7 +32,7 @@ class Category
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="category")
+     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="categories")
      * @Groups({"category:read","category:write"})
      */
     private $products;
