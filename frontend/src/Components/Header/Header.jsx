@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { useLogoutMutation } from "../../data/loginApi";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const [logout] = useLogoutMutation();
+  const navigate = useNavigate();
   return (
     <>
       <header className="header">
@@ -18,7 +22,16 @@ const Header = () => {
             <li className="header__nav__list__item">
               <Link to={"/artikelen/mijnartikelen"}>Mijn Artikelen</Link>
             </li>
-            <li className="header__nav__list__item">Uitloggen</li>
+            <li className="header__nav__list__item">
+              <button
+                onClick={async () => {
+                  await logout();
+                  navigate("/login");
+                }}
+              >
+                Afmelden
+              </button>
+            </li>
           </ul>
         </nav>
       </header>

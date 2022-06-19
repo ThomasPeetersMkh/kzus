@@ -4,21 +4,18 @@ const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8001/api/products",
+    credentials: "include",
   }),
   endpoints: (builder) => ({
     getAllProducts: builder.query({
       query: () => ({ url: `/` }),
-      providesTags: ["PRODUCTAPI"],
-    }),
-    getProductById: builder.query({
-      query: (id) => ({ url: `/${id}` }),
     }),
     getProductById: builder.mutation({
-      query: ({}) => ({ url: `/${id}` }),
+      query: (id) => ({ url: `/${id}` }),
     }),
   }),
 });
 
 export default productApi;
 
-export const { useGetAllProductsQuery, useGetCocktailByIdQuery } = productApi;
+export const { useGetAllProductsQuery, useGetProductByIdMutation } = productApi;
