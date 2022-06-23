@@ -1,32 +1,32 @@
 import { useState } from "react";
 import ArticleModal from "../ArticleModal/ArticleModal";
 
-const Article = ({ details }) => {
+const SchoolArticle = ({ details: { full } }) => {
   const {
     name,
     school: { name: schoolName },
     imgPath,
     description,
-  } = details;
+  } = full;
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <div className="article">
-      <h3 className="article__title">
+    <div className="school">
+      <h3 className="school__title">
         {name} - {schoolName}
       </h3>
-      <div className="article__body">
-        <div className="article__body__image">
+      <div className="school__body">
+        <div className="school__body__image">
           <img src={imgPath} alt={`foto voor ${name}`} />
         </div>
-        <div className="article__body__right">
-          <div className="article__body__right__descontainer">
-            <p className="article__body__right__descontainer__description">
+        <div className="school__body__right">
+          <div className="school__body__right__descontainer">
+            <p className="school__body__right__descontainer__description">
               {description}
             </p>
           </div>
           <button
-            className="article__body__right__button"
+            className="school__body__right__button"
             onClick={() => setModalOpen(true)}
           >
             Bekijk details
@@ -36,7 +36,7 @@ const Article = ({ details }) => {
           <ArticleModal
             modalOpen={modalOpen}
             setModalOpen={setModalOpen}
-            details={details}
+            details={full}
           />
         )}
       </div>
@@ -44,4 +44,4 @@ const Article = ({ details }) => {
   );
 };
 
-export default Article;
+export default SchoolArticle;

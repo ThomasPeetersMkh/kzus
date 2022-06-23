@@ -22,7 +22,7 @@ class Product
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"product:read","product:write"})
+     * @Groups({"product:read","school:read"})
      */
     private $id;
 
@@ -40,15 +40,15 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups({"product:read","product:write","category:read"})
+     * @Groups({"product:read","product:write","school:read","category:read"})
      */
     private $status;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"product:read","product:write","category:read"})
+     * @Groups({"product:read","product:write","school:read","category:read"})
      */
-    private $img_path;
+    private $imgPath;
 
     /**
      * @ORM\ManyToOne(targetEntity=School::class, inversedBy="products")
@@ -59,7 +59,7 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="products")
-     * @Groups({"product:read","product:write","category:read"})
+     * @Groups({"product:read","product:write","school:read","category:read"})
      */
     private $user;
 
@@ -67,11 +67,11 @@ class Product
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="products")
      * @Groups({"product:read","product:write"})
      */
-    private $category;
+    private $categories;
 
     public function __construct()
     {
-        $this->category = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -117,12 +117,12 @@ class Product
 
     public function getImgPath(): ?string
     {
-        return $this->img_path;
+        return $this->imgPath;
     }
 
-    public function setImgPath(string $img_path): self
+    public function setImgPath(string $imgPath): self
     {
-        $this->img_path = $img_path;
+        $this->imgPath = $imgPath;
 
         return $this;
     }
@@ -154,15 +154,15 @@ class Product
     /**
      * @return Collection<int, Category>
      */
-    public function getCategory(): Collection
+    public function getCategories(): Collection
     {
-        return $this->category;
+        return $this->categories;
     }
 
     public function addCategory(Category $category): self
     {
-        if (!$this->category->contains($category)) {
-            $this->category[] = $category;
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
         }
 
         return $this;
@@ -170,7 +170,7 @@ class Product
 
     public function removeCategory(Category $category): self
     {
-        $this->category->removeElement($category);
+        $this->categories->removeElement($category);
 
         return $this;
     }

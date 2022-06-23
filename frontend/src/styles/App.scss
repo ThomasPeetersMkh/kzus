@@ -161,6 +161,8 @@
     &__nav {
       &__list {
         display: flex;
+        justify-content: baseline;
+        align-items: baseline;
         &__item {
           font-size: 25px;
           padding: 5px 15px;
@@ -169,6 +171,17 @@
             &::after {
               content: "+";
               color: $accent;
+            }
+          }
+          &__button {
+            background: $primary;
+            border: none;
+            font-size: 25px;
+            padding: 5px 15px;
+            color: $secondary;
+            font-family: Oswald;
+            &:hover {
+              cursor: pointer;
             }
           }
           &:last-of-type {
@@ -280,6 +293,89 @@
               &:hover {
                 background-color: #c74877;
                 cursor: pointer;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .schools {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    &__grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      justify-content: space-between;
+      &__school {
+        padding: 10px;
+        font-size: 30px;
+        background-color: $secondary;
+        border-radius: 15px;
+        color: $primary;
+        text-align: center;
+      }
+      &__grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: flex-start;
+        .school {
+          padding: 10px;
+          border: $secondary 5px solid;
+          background-color: $primary;
+          color: $secondary;
+          border-radius: 15px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          flex: 0 1 400px;
+          &__title {
+            font-size: 25px;
+          }
+          &__body {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            gap: 15px;
+            &__image {
+              aspect-ratio: 3/4;
+              grid-column: 1/2;
+              img {
+                display: block;
+                object-fit: cover;
+                border-radius: 7px;
+                width: 100%;
+                height: 100%;
+              }
+            }
+            &__right {
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              gap: 15px;
+              height: 100%;
+              grid-column: 2/3;
+              &__descontainer {
+                height: 75%;
+                &__description {
+                  height: 100%;
+                  overflow-y: auto;
+                }
+              }
+
+              &__button {
+                border: none;
+                border-radius: 5px;
+                background-color: $accent;
+                color: $primary;
+                padding: 10px 30px;
+                &:hover {
+                  background-color: #c74877;
+                  cursor: pointer;
+                }
               }
             }
           }

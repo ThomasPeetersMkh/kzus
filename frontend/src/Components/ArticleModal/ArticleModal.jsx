@@ -2,7 +2,12 @@ import Modal from "react-modal";
 
 const ArticleModal = ({ modalOpen, setModalOpen, details }) => {
   Modal.setAppElement("#root");
-  const { name, school, img_url, description } = details;
+  const {
+    name,
+    school: { name: schoolName },
+    imgPath,
+    description,
+  } = details;
 
   function afterOpenModal() {}
 
@@ -28,7 +33,7 @@ const ArticleModal = ({ modalOpen, setModalOpen, details }) => {
       </div>
       <div className="articleModal__body">
         <div className="articleModal__body__left">
-          <img src={img_url} alt={`foto voor ${name}`} />
+          <img src={imgPath} alt={`foto voor ${name}`} />
         </div>
         <div className="articleModal__body__right">
           <p className="articleModal__body__right__description">
@@ -36,7 +41,7 @@ const ArticleModal = ({ modalOpen, setModalOpen, details }) => {
           </p>
           <div className="articleModal__body__right__bottom">
             <p className="articleModal__body__right__bottom__school">
-              Eigendom van {school}
+              Eigendom van {schoolName}
             </p>
             <form
               className="articleModal__body__right__bottom__submit"

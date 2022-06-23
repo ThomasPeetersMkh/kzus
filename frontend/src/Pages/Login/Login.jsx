@@ -1,14 +1,26 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../../data/loginApi";
+import store from "../../data";
+import userSlice from "../../data/user";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [loginUser] = useLoginMutation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["BEARER"]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("logging in");
+    const { data } = await loginUser({ email, password });
+    store.dispatch(userSlice.actions.login(data));
+    console.log(data);
+    setCookie("BEARER", data.token, {
+      httpOnly: true,
+    });
     navigate("/");
   };
 
@@ -30,7 +42,6 @@ const Login = () => {
                 placeholder="Email"
                 className="login__box__form__input__email"
                 onChange={(e) => {
-                  console.log(e.target.value);
                   setEmail(e.target.value);
                 }}
               />
@@ -45,7 +56,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <button>Click Me</button>
+            <button>Aanmelden</button>
           </form>
         </div>
       </div>
