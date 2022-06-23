@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../data/loginApi";
 import store from "../../data";
 import userSlice from "../../data/user";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -10,10 +11,16 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [cookies, setCookie, removeCookie] = useCookies(["BEARER"]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { data } = await loginUser({ email, password });
     store.dispatch(userSlice.actions.login(data));
+    console.log(data);
+    setCookie("BEARER", data.token, {
+      httpOnly: true,
+    });
     navigate("/");
   };
 

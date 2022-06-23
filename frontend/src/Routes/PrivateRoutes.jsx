@@ -3,7 +3,7 @@ import { Outlet, Navigate } from "react-router-dom";
 
 const useAuth = () => {
   const user = useSelector((state) => state.userState);
-  return user.isLoggedIn;
+  return true;
 };
 
 const PrivateRoutes = () => {

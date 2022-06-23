@@ -3,15 +3,16 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const loginApi = createApi({
   reducerPath: "loginApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8001",
+    baseUrl: "http://localhost:8001/api",
   }),
   endpoints: (builder) => ({
     login: builder.mutation({
       query: ({ email, password }) => ({
-        url: `/app_json_login`,
+        url: `/login_check`,
         method: "POST",
+        credentials: "include",
         body: {
-          email,
+          username: email,
           password,
         },
       }),
