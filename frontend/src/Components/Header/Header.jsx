@@ -24,6 +24,7 @@ const Header = () => {
             </li>
             <li className="header__nav__list__item">
               <button
+                className="header__nav__list__item__button"
                 onClick={async () => {
                   await logout();
                   navigate("/login");
