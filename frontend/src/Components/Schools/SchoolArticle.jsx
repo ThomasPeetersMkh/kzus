@@ -17,7 +17,10 @@ const SchoolArticle = ({ details: { full } }) => {
       </h3>
       <div className="school__body">
         <div className="school__body__image">
-          <img src={imgPath} alt={`foto voor ${name}`} />
+          <img
+            src={"https://picsum.photos/200/300"}
+            alt={`foto voor ${name}`}
+          />
         </div>
         <div className="school__body__right">
           <div className="school__body__right__descontainer">

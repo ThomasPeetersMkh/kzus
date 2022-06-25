@@ -11,6 +11,10 @@ const store = configureStore({
     [loginApi.reducerPath]: loginApi.reducer,
     [schoolApi.reducerPath]: schoolApi.reducer,
   }),
+  middleware: (getDefaultMiddleware) => [
+    ...getDefaultMiddleware(),
+    productApi.middleware,
+  ],
 });
 
 export default store;

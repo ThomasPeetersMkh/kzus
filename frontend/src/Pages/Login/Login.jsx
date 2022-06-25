@@ -56,7 +56,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <button>Aanmelden</button>
+            <button className="login__box__form__button">Aanmelden</button>
           </form>
         </div>
       </div>

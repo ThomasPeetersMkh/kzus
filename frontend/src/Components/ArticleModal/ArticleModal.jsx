@@ -33,7 +33,10 @@ const ArticleModal = ({ modalOpen, setModalOpen, details }) => {
       </div>
       <div className="articleModal__body">
         <div className="articleModal__body__left">
-          <img src={imgPath} alt={`foto voor ${name}`} />
+          <img
+            src={"https://picsum.photos/200/300"}
+            alt={`foto voor ${name}`}
+          />
         </div>
         <div className="articleModal__body__right">
           <p className="articleModal__body__right__description">

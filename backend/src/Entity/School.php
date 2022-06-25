@@ -67,8 +67,7 @@ class School
 
     public function setName(string $name): self
     {
-        $this->name = $name;
-
+        $this->name = strip_tags($name);
         return $this;
     }
 
@@ -140,4 +139,9 @@ class School
 
         return $this;
     }
+
+    public function __toString() {
+      return $this->getName();
+    }
+
 }

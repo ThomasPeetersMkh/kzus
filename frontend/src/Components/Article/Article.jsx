@@ -17,7 +17,10 @@ const Article = ({ details }) => {
       </h3>
       <div className="article__body">
         <div className="article__body__image">
-          <img src={imgPath} alt={`foto voor ${name}`} />
+          <img
+            src={"https://picsum.photos/200/300"}
+            alt={`foto voor ${name}`}
+          />
         </div>
         <div className="article__body__right">
           <div className="article__body__right__descontainer">

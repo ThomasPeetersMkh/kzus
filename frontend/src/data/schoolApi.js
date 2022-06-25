@@ -9,9 +9,11 @@ const schoolApi = createApi({
   endpoints: (builder) => ({
     getAllSchools: builder.query({
       query: () => ({ url: `schools` }),
+      providesTags: ["AllSchools"],
     }),
     getSchoolById: builder.mutation({
       query: (id) => ({ url: `schools/${id}` }),
+      providesTags: ["AllSchools"],
     }),
   }),
 });
