@@ -98,7 +98,7 @@ class Product
 
     public function setDescription(?string $description): self
     {
-        $this->description = $description;
+        $this->description = strip_tags($description);
 
         return $this;
     }

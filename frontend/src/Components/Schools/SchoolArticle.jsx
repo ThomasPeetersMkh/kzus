@@ -18,7 +18,7 @@ const SchoolArticle = ({ details: { full } }) => {
       <div className="school__body">
         <div className="school__body__image">
           <img
-            src={"https://picsum.photos/200/300"}
+            src={`http://localhost:8001/uploads/photos/${imgPath}`}
             alt={`foto voor ${name}`}
           />
         </div>

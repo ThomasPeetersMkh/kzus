@@ -233,6 +233,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @return Collection<int, Product>
+     *
      */
     public function getProducts(): Collection
     {

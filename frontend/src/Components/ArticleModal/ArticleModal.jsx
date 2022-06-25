@@ -1,12 +1,15 @@
 import Modal from "react-modal";
+import { usePatchProductMutation } from "../../data/productApi";
 
 const ArticleModal = ({ modalOpen, setModalOpen, details }) => {
+  const [patchProduct] = usePatchProductMutation();
   Modal.setAppElement("#root");
   const {
+    id,
     name,
     school: { name: schoolName },
     imgPath,
-    description,
+    description
   } = details;
 
   function afterOpenModal() {}
@@ -48,7 +51,18 @@ const ArticleModal = ({ modalOpen, setModalOpen, details }) => {
             </p>
             <form
               className="articleModal__body__right__bottom__submit"
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const data = {
+                  "status": "Uitgeleend",
+                  "user": "api/users/1"
+                };
+                console.log(data);
+                await patchProduct({
+                  productId: id,
+                  data
+                });
+              }}
             >
               <button className="articleModal__body__right__bottom__submit__button">
                 Uitlenen

@@ -6,7 +6,7 @@ const Article = ({ details }) => {
     name,
     school: { name: schoolName },
     imgPath,
-    description,
+    description
   } = details;
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -18,7 +18,7 @@ const Article = ({ details }) => {
       <div className="article__body">
         <div className="article__body__image">
           <img
-            src={"https://picsum.photos/200/300"}
+            src={`http://localhost:8001/uploads/photos/${imgPath}`}
             alt={`foto voor ${name}`}
           />
         </div>
