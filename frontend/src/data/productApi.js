@@ -26,7 +26,7 @@ const productApi = createApi({
           }
         };
       },
-      invalidatesTags: ["AllProducts"]
+      invalidatesTags: ["AllProducts", "GetUser"]
     })
   })
 });

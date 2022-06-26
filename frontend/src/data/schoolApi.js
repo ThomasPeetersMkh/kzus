@@ -4,20 +4,20 @@ const schoolApi = createApi({
   reducerPath: "schoolApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8001/api/",
-    credentials: "include",
+    credentials: "include"
   }),
   endpoints: (builder) => ({
     getAllSchools: builder.query({
       query: () => ({ url: `schools` }),
-      providesTags: ["AllSchools"],
+      providesTags: ["AllSchools"]
     }),
-    getSchoolById: builder.mutation({
+    getSchoolById: builder.query({
       query: (id) => ({ url: `schools/${id}` }),
-      providesTags: ["AllSchools"],
-    }),
-  }),
+      providesTags: ["AllSchools"]
+    })
+  })
 });
 
 export default schoolApi;
 
-export const { useGetAllSchoolsQuery, useGetSchoolByIdMutation } = schoolApi;
+export const { useGetAllSchoolsQuery, useGetSchoolByIdQuery } = schoolApi;

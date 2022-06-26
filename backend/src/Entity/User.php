@@ -68,6 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Product::class, mappedBy="user")
+     * @Groups({"user:read"})
      */
     private $products;
 

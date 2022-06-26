@@ -37,7 +37,7 @@ const ArticleModal = ({ modalOpen, setModalOpen, details }) => {
       <div className="articleModal__body">
         <div className="articleModal__body__left">
           <img
-            src={"https://picsum.photos/200/300"}
+            src={`http://localhost:8001/uploads/photos/${imgPath}`}
             alt={`foto voor ${name}`}
           />
         </div>
@@ -54,10 +54,9 @@ const ArticleModal = ({ modalOpen, setModalOpen, details }) => {
               onSubmit={async (e) => {
                 e.preventDefault();
                 const data = {
-                  "status": "Uitgeleend",
-                  "user": "api/users/1"
+                  status: "Uitgeleend",
+                  user: "api/users/1"
                 };
-                console.log(data);
                 await patchProduct({
                   productId: id,
                   data

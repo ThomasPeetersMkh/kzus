@@ -22,7 +22,6 @@ const SingleSchool = ({ details }) => {
           products
             .filter((prod) => prod.status === "Beschikbaar")
             .map((prod) => {
-              console.log(prod);
               const full = { ...prod, school: { name: name } };
               return <SchoolArticle key={prod.id} details={{ full }} />;
             })}

@@ -177,6 +177,37 @@
           font-size: 25px;
           padding: 5px 15px;
           border-right: 2px solid $secondary;
+          overflow: hidden;
+
+          &:hover .header__nav__list__item__dropdown {
+            display: block;
+          }
+
+          &__dropdown {
+            display: none;
+            position: absolute;
+            background-color: $primary;
+            border-left: 2px solid $secondary;
+            border-right: 2px solid $secondary;
+            z-index: 1;
+            li {
+              padding: 5px 14px 5px 5px;
+              &:last-of-type {
+                border-bottom: 2px solid $secondary;
+              }
+            }
+            li:hover {
+              background-color: $secondary;
+              a {
+                color: $primary;
+              }
+            }
+          }
+          &:nth-of-type(2) {
+            .header__nav__list__item__dropdown {
+              margin-left: -17px;
+            }
+          }
           &:nth-child(-n + 2) {
             &::after {
               content: "+";
@@ -187,7 +218,7 @@
             background: $primary;
             border: none;
             font-size: 25px;
-            padding: 5px 15px;
+            padding: 5px 0px 5px 0px;
             color: $secondary;
             font-family: Oswald;
             &:hover {
