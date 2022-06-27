@@ -6,7 +6,7 @@ const SchoolArticle = ({ details: { full } }) => {
     name,
     school: { name: schoolName },
     imgPath,
-    description,
+    description
   } = full;
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -17,7 +17,10 @@ const SchoolArticle = ({ details: { full } }) => {
       </h3>
       <div className="school__body">
         <div className="school__body__image">
-          <img src={imgPath} alt={`foto voor ${name}`} />
+          <img
+            src={`https://wdev2.be/fs_thomasp/eindwerk/system/public/uploads/photos/${imgPath}`}
+            alt={`foto voor ${name}`}
+          />
         </div>
         <div className="school__body__right">
           <div className="school__body__right__descontainer">

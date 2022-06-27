@@ -27,7 +27,7 @@ class School
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"school:read","school:write","category:read","product:read"})
+     * @Groups({"school:read","school:write","category:read","product:read","user:read"})
      */
     private $name;
 
@@ -67,8 +67,7 @@ class School
 
     public function setName(string $name): self
     {
-        $this->name = $name;
-
+        $this->name = strip_tags($name);
         return $this;
     }
 
@@ -140,4 +139,9 @@ class School
 
         return $this;
     }
+
+    public function __toString() {
+      return $this->getName();
+    }
+
 }

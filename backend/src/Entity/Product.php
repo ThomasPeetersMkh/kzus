@@ -22,38 +22,38 @@ class Product
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"product:read","school:read"})
+     * @Groups({"product:read","school:read","user:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"product:read","product:write","school:read","category:read"})
+     * @Groups({"product:read","product:write","school:read","category:read","user:read"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"product:read","product:write","school:read","category:read"})
+     * @Groups({"product:read","product:write","school:read","category:read","user:read"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups({"product:read","product:write","school:read","category:read"})
+     * @Groups({"product:read","product:write","school:read","category:read","user:read"})
      */
     private $status;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"product:read","product:write","school:read","category:read"})
+     * @Groups({"product:read","product:write","school:read","category:read","user:read"})
      */
     private $imgPath;
 
     /**
      * @ORM\ManyToOne(targetEntity=School::class, inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"product:read","product:write","category:read"})
+     * @Groups({"product:read","product:write","category:read","user:read"})
      */
     private $school;
 
@@ -98,7 +98,7 @@ class Product
 
     public function setDescription(?string $description): self
     {
-        $this->description = $description;
+        $this->description = strip_tags($description);
 
         return $this;
     }

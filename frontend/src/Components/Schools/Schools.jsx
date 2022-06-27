@@ -2,8 +2,12 @@ import { useGetAllSchoolsQuery } from "../../data/schoolApi";
 import SingleSchool from "./SingleSchool";
 
 const Schools = () => {
-  const { data, isError, isLoading } = useGetAllSchoolsQuery();
-  console.log(data);
+  const { data, isError, isLoading } = useGetAllSchoolsQuery(undefined, {
+    pollingInterval: 3000,
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    skip: false
+  });
   return (
     <div className="schools">
       <div className="schools__grid">

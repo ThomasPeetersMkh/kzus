@@ -83,7 +83,7 @@ class JWTSubscriber implements EventSubscriberInterface
         $secure = false,
         $httpOnly = true,
         $raw = false,
-        $sameSite = 'lax'    //kan ook 'lax' zijn, dat is de default waarde
+        $sameSite = 'none'
       )
     );
   }

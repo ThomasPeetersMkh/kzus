@@ -1,15 +1,14 @@
-import { useState } from "react";
-import ArticleModal from "../ArticleModal/ArticleModal";
+import { usePatchProductMutation } from "../../data/productApi";
 
-const Article = ({ details }) => {
+const UsedArticle = ({ details }) => {
   const {
+    id,
     name,
     school: { name: schoolName },
     imgPath,
     description
   } = details;
-  const [modalOpen, setModalOpen] = useState(false);
-
+  const [patchProduct] = usePatchProductMutation();
   return (
     <div className="article">
       <h3 className="article__title">
@@ -30,21 +29,23 @@ const Article = ({ details }) => {
           </div>
           <button
             className="article__body__right__button"
-            onClick={() => setModalOpen(true)}
+            onClick={async () => {
+              const data = {
+                status: "Beschikbaar",
+                user: null
+              };
+              await patchProduct({
+                productId: id,
+                data
+              });
+            }}
           >
-            Bekijk details
+            Terugbrengen
           </button>
         </div>
-        {modalOpen && (
-          <ArticleModal
-            modalOpen={modalOpen}
-            setModalOpen={setModalOpen}
-            details={details}
-          />
-        )}
       </div>
     </div>
   );
 };
 
-export default Article;
+export default UsedArticle;

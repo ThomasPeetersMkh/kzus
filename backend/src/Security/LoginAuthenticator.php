@@ -48,14 +48,13 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator {
 
     // For example:
     // return new RedirectResponse($this->urlGenerator->generate('some_route'));
-    return new RedirectResponse($this->urlGenerator->generate('app_home'));
+    return new RedirectResponse($this->urlGenerator->generate('admin'));
   }
 
   protected function getLoginUrl(Request $request): string {
     return $this->urlGenerator->generate(self::LOGIN_ROUTE);
   }
 
-  //VOEG DEZE ONTBREKENDE METHODE TOE
   public function supports(Request $request): bool {
     return self::LOGIN_ROUTE === $request->attributes->get('_route')
       && $request->isMethod('POST');

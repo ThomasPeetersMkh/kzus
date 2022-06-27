@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
@@ -61,11 +62,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity=School::class, inversedBy="users")
+     * @Groups({"user:write"})
      */
     private $schools;
 
     /**
      * @ORM\OneToMany(targetEntity=Product::class, mappedBy="user")
+     * @Groups({"user:read"})
      */
     private $products;
 
@@ -231,6 +234,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @return Collection<int, Product>
+     *
      */
     public function getProducts(): Collection
     {
@@ -270,4 +274,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    public function __toString() {
+      return $this->getName() . " " . $this->getFirstname();
+    }
+
 }
