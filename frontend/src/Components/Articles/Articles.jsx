@@ -1,45 +1,34 @@
 import Article from "../Article/Article";
+import { useGetAllProductsQuery } from "../../data/productApi";
 
 const Articles = () => {
-  const articles = [
-    {
-      name: "Fiets",
-      school: "Het Klavertje",
-      img_url: "https://picsum.photos/200/300",
-      description: "Een fiets voor meisjes van 5-7jaar",
-    },
-    {
-      name: "Skateboard",
-      school: "De Luchtballon",
-      img_url: "https://picsum.photos/200/300",
-      description: "Skateboard voor kinderen van de lagere school",
-    },
-    {
-      name: "Skateboard",
-      school: "De Luchtballon",
-      img_url: "https://picsum.photos/200/300",
-      description: "Skateboard voor kinderen van de lagere school",
-    },
-    {
-      name: "Skateboard",
-      school: "De Luchtballon",
-      img_url: "https://picsum.photos/200/300",
-      description: "Skateboard voor kinderen van de lagere school",
-    },
-    {
-      name: "Skateboard",
-      school: "De Luchtballon",
-      img_url: "https://picsum.photos/200/300",
-      description: "Skateboard voor kinderen van de lagere school",
-    },
-  ];
+  const { data, isError, isLoading } = useGetAllProductsQuery(undefined, {
+    pollingInterval: 1000
+  });
   return (
     <div className="articles">
-      <h2 className="articles__title">
-        Er zijn {articles.length} artikelen gevonden
-      </h2>
+      {!isError && isLoading && (
+        <h2 className="articles__title">Data is aan het laden</h2>
+      )}
+      {isError && !isLoading && (
+        <h2 className="articles__title">Er is iets mis gegaan...</h2>
+      )}
+      {!isError && !isLoading && (
+        <h2 className="articles__title">
+          Er zijn{" "}
+          {data &&
+            data["hydra:member"].filter((prod) => prod.status === "Beschikbaar")
+              .length}{" "}
+          artikelen gevonden
+        </h2>
+      )}
       <div className="articles__grid">
-        {articles && articles.map((article) => <Article details={article} />)}
+        {data &&
+          data["hydra:member"]
+            .filter((prod) => prod.status === "Beschikbaar")
+            .map((product) => {
+              return <Article key={product.id} details={product} />;
+            })}
       </div>
     </div>
   );

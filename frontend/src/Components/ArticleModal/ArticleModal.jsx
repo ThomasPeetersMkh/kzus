@@ -1,8 +1,16 @@
 import Modal from "react-modal";
+import { usePatchProductMutation } from "../../data/productApi";
 
 const ArticleModal = ({ modalOpen, setModalOpen, details }) => {
+  const [patchProduct] = usePatchProductMutation();
   Modal.setAppElement("#root");
-  const { name, school, img_url, description } = details;
+  const {
+    id,
+    name,
+    school: { name: schoolName },
+    imgPath,
+    description
+  } = details;
 
   function afterOpenModal() {}
 
@@ -28,7 +36,10 @@ const ArticleModal = ({ modalOpen, setModalOpen, details }) => {
       </div>
       <div className="articleModal__body">
         <div className="articleModal__body__left">
-          <img src={img_url} alt={`foto voor ${name}`} />
+          <img
+            src={`https://wdev2.be/fs_thomasp/eindwerk/system/public/uploads/photos/${imgPath}`}
+            alt={`foto voor ${name}`}
+          />
         </div>
         <div className="articleModal__body__right">
           <p className="articleModal__body__right__description">
@@ -36,11 +47,21 @@ const ArticleModal = ({ modalOpen, setModalOpen, details }) => {
           </p>
           <div className="articleModal__body__right__bottom">
             <p className="articleModal__body__right__bottom__school">
-              Eigendom van {school}
+              Eigendom van {schoolName}
             </p>
             <form
               className="articleModal__body__right__bottom__submit"
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const data = {
+                  status: "Uitgeleend",
+                  user: "api/users/1"
+                };
+                await patchProduct({
+                  productId: id,
+                  data
+                });
+              }}
             >
               <button className="articleModal__body__right__bottom__submit__button">
                 Uitlenen

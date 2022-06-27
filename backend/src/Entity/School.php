@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ApiResource(
@@ -23,13 +22,12 @@ class School
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"school:read","school:write"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"school:read","school:write","product:read","category:read"})
+     * @Groups({"school:read","school:write","category:read","product:read","user:read"})
      */
     private $name;
 
@@ -40,21 +38,20 @@ class School
     private $address;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="schools")
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="schools")
      * @Groups({"school:read","school:write"})
      */
-    private $relation;
+    private $users;
 
     /**
      * @ORM\OneToMany(targetEntity=Product::class, mappedBy="school")
      * @Groups({"school:read","school:write"})
-     * @MaxDepth(1)
      */
     private $products;
 
     public function __construct()
     {
-        $this->relation = new ArrayCollection();
+        $this->users = new ArrayCollection();
         $this->products = new ArrayCollection();
     }
 
@@ -70,8 +67,7 @@ class School
 
     public function setName(string $name): self
     {
-        $this->name = $name;
-
+        $this->name = strip_tags($name);
         return $this;
     }
 
@@ -90,23 +86,26 @@ class School
     /**
      * @return Collection<int, User>
      */
-    public function getRelation(): Collection
+    public function getUsers(): Collection
     {
-        return $this->relation;
+        return $this->users;
     }
 
-    public function addRelation(User $relation): self
+    public function addUser(User $user): self
     {
-        if (!$this->relation->contains($relation)) {
-            $this->relation[] = $relation;
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addSchool($this);
         }
 
         return $this;
     }
 
-    public function removeRelation(User $relation): self
+    public function removeUser(User $user): self
     {
-        $this->relation->removeElement($relation);
+        if ($this->users->removeElement($user)) {
+            $user->removeSchool($this);
+        }
 
         return $this;
     }
@@ -140,4 +139,9 @@ class School
 
         return $this;
     }
+
+    public function __toString() {
+      return $this->getName();
+    }
+
 }
