@@ -148,6 +148,14 @@
           font-weight: 700;
           color: $primary;
           font-family: Oswald;
+          &:hover {
+            background-color: #c74877;
+            cursor: pointer;
+          }
+          &:disabled {
+            background-color: #c74877;
+            cursor: wait;
+          }
         }
       }
     }

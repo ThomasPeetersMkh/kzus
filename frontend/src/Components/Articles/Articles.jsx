@@ -7,13 +7,21 @@ const Articles = () => {
   });
   return (
     <div className="articles">
-      <h2 className="articles__title">
-        Er zijn{" "}
-        {data &&
-          data["hydra:member"].filter((prod) => prod.status === "Beschikbaar")
-            .length}{" "}
-        artikelen gevonden
-      </h2>
+      {!isError && isLoading && (
+        <h2 className="articles__title">Data is aan het laden</h2>
+      )}
+      {isError && !isLoading && (
+        <h2 className="articles__title">Er is iets mis gegaan...</h2>
+      )}
+      {!isError && !isLoading && (
+        <h2 className="articles__title">
+          Er zijn{" "}
+          {data &&
+            data["hydra:member"].filter((prod) => prod.status === "Beschikbaar")
+              .length}{" "}
+          artikelen gevonden
+        </h2>
+      )}
       <div className="articles__grid">
         {data &&
           data["hydra:member"]

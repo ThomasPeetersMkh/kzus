@@ -10,18 +10,26 @@ const Login = () => {
   const [loginUser] = useLoginMutation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [cookies, setCookie, removeCookie] = useCookies(["BEARER"]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { data } = await loginUser({ email, password });
-    store.dispatch(userSlice.actions.login(data));
-    console.log(data);
-    setCookie("BEARER", data.token, {
-      httpOnly: true,
-    });
-    navigate("/");
+    try {
+      setIsLoading(true);
+      const { data } = await loginUser({ email, password });
+      store.dispatch(userSlice.actions.login(data));
+      console.log(data);
+      setCookie("BEARER", data.token, {
+        httpOnly: true
+      });
+      navigate("/");
+    } catch {
+      window.alert("Dit zijn geen geldige logingegevens");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -29,7 +37,7 @@ const Login = () => {
       <div className="login">
         <div className="login__box">
           <img
-            src="../../assets/kobaz.png"
+            src="/assets/kobaz.png"
             alt="koba Zuiderkempen logo"
             className="login__box__image"
           ></img>
@@ -56,7 +64,9 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <button className="login__box__form__button">Aanmelden</button>
+            <button className="login__box__form__button" disabled={isLoading}>
+              Aanmelden
+            </button>
           </form>
         </div>
       </div>
