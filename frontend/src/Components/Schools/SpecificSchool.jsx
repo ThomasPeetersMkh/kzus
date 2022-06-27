@@ -12,7 +12,6 @@ const SpecificSchool = () => {
     "de luchtballon": 4
   };
   const { data, isError, isLoading } = useGetSchoolByIdQuery(schools[call]);
-  console.log(data);
   return (
     <>
       <div className="schools">

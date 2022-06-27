@@ -6,9 +6,8 @@ const Schools = () => {
     pollingInterval: 3000,
     refetchOnMountOrArgChange: true,
     refetchOnFocus: true,
-    skip: false,
+    skip: false
   });
-  console.log(data);
   return (
     <div className="schools">
       <div className="schools__grid">

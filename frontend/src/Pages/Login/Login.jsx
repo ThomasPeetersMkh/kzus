@@ -20,7 +20,6 @@ const Login = () => {
       setIsLoading(true);
       const { data } = await loginUser({ email, password });
       store.dispatch(userSlice.actions.login(data));
-      console.log(data);
       setCookie("BEARER", data.token, {
         httpOnly: true
       });

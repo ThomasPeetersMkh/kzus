@@ -5,7 +5,6 @@ const UserArticle = () => {
   const { data, isError, isLoading } = useGetUserByIdQuery(1, {
     pollingInterval: 1000
   });
-  console.log(data);
   return (
     <div>
       <div className="articles">

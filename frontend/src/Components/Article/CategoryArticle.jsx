@@ -4,7 +4,6 @@ import Article from "./Article";
 const CategoryArticle = () => {
   const { name } = useParams();
   const call = name.split("-").join(" ");
-  console.log(call);
   const categories = {
     speelgoed: 1,
     kledij: 2,
@@ -13,12 +12,10 @@ const CategoryArticle = () => {
     verkleding: 5,
     allerlei: 6
   };
-  console.log(categories[call]);
 
   const { data, isError, isLoading } = useGetCategoryByIdQuery(
     categories[call]
   );
-  console.log(data);
 
   return (
     <div className="articles">

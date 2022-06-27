@@ -14,7 +14,6 @@ const Header = () => {
     isError: categoryError,
     isLoading: categoryLoading
   } = useGetAllCategoriesQuery();
-  console.log(categories);
 
   return (
     <>
@@ -29,7 +28,6 @@ const Header = () => {
               <div className="header__nav__list__item__dropdown">
                 {categories &&
                   categories["hydra:member"].map((category) => {
-                    console.log(category.name);
                     const back = category.name
                       .split(" ")
                       .join("-")
@@ -49,7 +47,6 @@ const Header = () => {
               <div className="header__nav__list__item__dropdown">
                 {data &&
                   data["hydra:member"].map((school) => {
-                    console.log(school.name);
                     const back = school.name.split(" ").join("-").toLowerCase();
                     return (
                       <li>
