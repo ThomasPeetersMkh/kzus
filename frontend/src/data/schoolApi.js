@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const schoolApi = createApi({
   reducerPath: "schoolApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8001/api/",
+    baseUrl: "https://wdev2.be/fs_thomasp/eindwerk/api/",
     credentials: "include"
   }),
   endpoints: (builder) => ({

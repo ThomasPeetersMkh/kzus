@@ -17,12 +17,16 @@ class DashboardController extends AbstractDashboardController {
    * @Route("/admin", name="admin")
    */
   public function index(): Response {
-    return parent::index();
+    $roles = $this->getUser()->getRoles();
+    if (in_array("ROLE_SUPER_ADMIN", $roles)){
+      return $this->render('admin/dashboardsuper.html.twig',["name"=>$this->getUser()->getName(),"firstname"=>$this->getUser()->getFirstName()]);
+    }
+    return $this->render('admin/dashboard.html.twig',["name"=>$this->getUser()->getName(),"firstname"=>$this->getUser()->getFirstName()]);
   }
 
   public function configureDashboard(): Dashboard {
     return Dashboard::new()
-      ->setTitle('Backend');
+      ->setTitle('KZUS');
   }
 
   public function configureMenuItems(): iterable {

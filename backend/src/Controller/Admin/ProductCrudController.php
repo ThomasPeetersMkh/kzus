@@ -6,6 +6,7 @@ use App\Entity\Product;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -22,8 +23,8 @@ class ProductCrudController extends AbstractCrudController {
     $product = new Product();
     $actualSchool = "";
     $schools = $this->getUser()->getSchools();
-    foreach ($schools as $school){
-      $actualSchool= $school;
+    foreach ($schools as $school) {
+      $actualSchool = $school;
     }
     $product->setSchool($actualSchool);
     return $product;
@@ -38,8 +39,13 @@ class ProductCrudController extends AbstractCrudController {
       $config = [
         TextField::new('name'),
         TextEditorField::new('description'),
+        ChoiceField::new('status')->setChoices([
+          "Beschikbaar" => 'Beschikbaar',
+          "Uitgeleend" => "Uitgeleend",
+        ]),
         AssociationField::new('school')->setDisabled(),
         AssociationField::new('categories'),
+        AssociationField::new('user'),
         ImageField::new("img_path")
           ->setBasePath("uploads/photos")
           ->setUploadDir("public/uploads/photos")
@@ -50,8 +56,13 @@ class ProductCrudController extends AbstractCrudController {
       $config = [
         TextField::new('name'),
         TextEditorField::new('description'),
+        ChoiceField::new('status')->setChoices([
+          "Beschikbaar" => 'Beschikbaar',
+          "Uitgeleend" => "Uitgeleend",
+        ]),
         AssociationField::new('school'),
         AssociationField::new('categories'),
+        AssociationField::new('user'),
         ImageField::new("img_path")
           ->setBasePath("uploads/photos")
           ->setUploadDir("public/uploads/photos")

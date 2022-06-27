@@ -37,7 +37,7 @@ const ArticleModal = ({ modalOpen, setModalOpen, details }) => {
       <div className="articleModal__body">
         <div className="articleModal__body__left">
           <img
-            src={`http://localhost:8001/uploads/photos/${imgPath}`}
+            src={`https://wdev2.be/fs_thomasp/eindwerk/uploads/photos/${imgPath}`}
             alt={`foto voor ${name}`}
           />
         </div>

@@ -18,7 +18,7 @@ const Article = ({ details }) => {
       <div className="article__body">
         <div className="article__body__image">
           <img
-            src={`http://localhost:8001/uploads/photos/${imgPath}`}
+            src={`https://wdev2.be/fs_thomasp/eindwerk/uploads/photos/${imgPath}`}
             alt={`foto voor ${name}`}
           />
         </div>
